@@ -6,15 +6,25 @@ body {
     margin: 0;
     background-color: #000;
     overflow: hidden;
+    
   }
   canvas {
     border: 4px solid #000000;
     display: block;
     margin: auto;
+   
   }
 
 
-
+  #titulo {
+    font-size: 18px; /* Ajustar el tamaño de la fuente */
+    color: white; /* Cambiar el color del texto a blanco */
+    margin: 0; /* Espaciado superior e inferior */
+    text-align: center; /* Centrar el texto */
+    position: absolute; /* Posición absoluta para que esté en la parte inferior */
+    bottom: 10px; /* Distancia desde la parte inferior */
+    width: 100%; /* Hacer que el footer ocupe todo el ancho */
+}
   .boton-reinicio {
     background-color: #0015ff; /* Color de fondo */
     color: #FFFFFF; /* Color del texto */
