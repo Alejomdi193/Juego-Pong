@@ -5,7 +5,29 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #000;
+    overflow: hidden;
   }
   canvas {
     border: 4px solid #000000;
+    display: block;
+    margin: auto;
   }
+
+
+
+  .boton-reinicio {
+    background-color: #0015ff; /* Color de fondo */
+    color: #FFFFFF; /* Color del texto */
+    font-size: 16px; /* Tamaño de la fuente */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Esquinas redondeadas */
+    transition: background-color 0.3s ease; /* Efecto de transición */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton-reinicio:hover {
+    background-color: #0056ff; /* Color de fondo en hover */
+    cursor: pointer; /* Cambia el cursor a mano */
+}

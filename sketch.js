@@ -56,6 +56,14 @@ function setup() {
     computadoraY = height / 2 - altoRaqueta / 2;
     diametroPelota = altoCanvas * 0.05; // 5% del alto del canvas
     resetPelota();
+    
+    
+
+    let botonReinicio = createButton('Reiniciar Juego');
+    botonReinicio.position(anchoCanvas / 2 - 20, altoCanvas + 140); // Posiciona el botón
+    botonReinicio.size(100, 50); // Ajusta el tamaño del botón
+    botonReinicio.mousePressed(reiniciarJuego); // Asocia la función de reinicio al botón
+    botonReinicio.class('boton-reinicio');  
 }
 
 function draw() {
@@ -197,11 +205,17 @@ function keyReleased() {
     }
 }
 
-// Manejar el movimiento táctil para la raqueta del jugador
+// Manejar el movimiento táctil para la raqueta del jugador (izquierda)
 function touchMoved() {
-    // Actualiza la posición de la raqueta del jugador según la posición vertical del toque
-    jugadorY = touchY - altoRaqueta / 2;
-    jugadorY = constrain(jugadorY, grosorMarco, height - grosorMarco - altoRaqueta);
+    if (touchX < width / 2) {
+        // Actualiza la posición de la raqueta del jugador según la posición vertical del toque
+        jugadorY = touchY - altoRaqueta / 2;
+        jugadorY = constrain(jugadorY, grosorMarco, height - grosorMarco - altoRaqueta);
+    } else {
+        // Actualiza la posición de la raqueta de la computadora
+        computadoraY = touchY - altoRaqueta / 2;
+        computadoraY = constrain(computadoraY, grosorMarco, height - grosorMarco - altoRaqueta);
+    }
     return false; // Evita el comportamiento predeterminado
 }
 
@@ -214,6 +228,18 @@ function verificarOrientacion() {
 
 // Manejar el redimensionamiento de la ventana
 function windowResized() {
-    setup(); // Llama a setup para reajustar las dimensiones
+    setup(); // Llama a setup
     verificarOrientacion(); // Verifica la orientación al redimensionar
+}
+
+// Función para reiniciar el juego
+function reiniciarJuego() {
+    // Reinicia el puntaje
+    jugadorScore = 0;
+    computadoraScore = 0;
+    // Reinicia la posición de las raquetas
+    jugadorY = height / 2 - altoRaqueta / 2;
+    computadoraY = height / 2 - altoRaqueta / 2;
+    // Reinicia la pelota
+    resetPelota();
 }
