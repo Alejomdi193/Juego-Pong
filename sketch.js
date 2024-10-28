@@ -86,7 +86,7 @@ function dibujarPelota() {
 function mostrarPuntaje() {
     textSize(32);
     textAlign(CENTER, CENTER);
-    fill(color("#2B3FD6"));
+    fill(color("#FFF"));
     text(jugadorScore, width / 4, grosorMarco * 3);
     text(computadoraScore, 3 * width / 4, grosorMarco * 3);
 }
@@ -163,6 +163,7 @@ function resetPelota() {
     anguloPelota = 0;
 }
 
+// Manejar el movimiento de la raqueta del jugador con el teclado
 function keyPressed() {
     if (keyCode === UP_ARROW) {
         jugadorY -= altoRaqueta * 0.1; // Mueve un 10% de la altura de la raqueta
@@ -170,6 +171,14 @@ function keyPressed() {
         jugadorY += altoRaqueta * 0.1; // Mueve un 10% de la altura de la raqueta
     }
     jugadorY = constrain(jugadorY, grosorMarco, height - grosorMarco - altoRaqueta);
+}
+
+// Manejar el movimiento táctil para la raqueta del jugador
+function touchMoved() {
+    // Actualiza la posición de la raqueta del jugador según la posición vertical del toque
+    jugadorY = touchY - altoRaqueta / 2;
+    jugadorY = constrain(jugadorY, grosorMarco, height - grosorMarco - altoRaqueta);
+    return false; // Evita el comportamiento predeterminado
 }
 
 // Manejar el redimensionamiento de la ventana
