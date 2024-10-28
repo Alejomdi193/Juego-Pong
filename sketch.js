@@ -26,6 +26,9 @@ let bola;
 let sonidoRebote;
 let sonidoGol;
 
+let teclaArribaPresionada = false;
+let teclaAbajoPresionada = false;
+
 function preload() {
     fondo = loadImage('fondo1.png');
     barraJugador = loadImage('barra1.png');
@@ -41,6 +44,9 @@ function setup() {
     altoCanvas = windowHeight * 0.7;
     createCanvas(anchoCanvas, altoCanvas);
     
+    // Verificar si el dispositivo está en orientación vertical
+    verificarOrientacion();
+
     // Dimensiones dinámicas
     anchoRaqueta = anchoCanvas * 0.02; // 2% del ancho del canvas
     altoRaqueta = altoCanvas * 0.25; // 25% del alto del canvas
@@ -61,6 +67,17 @@ function draw() {
     moverPelota();
     moverComputadora();
     verificarColisiones();
+
+    // Mover la raqueta del jugador según las teclas presionadas
+    if (teclaArribaPresionada) {
+        jugadorY -= altoRaqueta * 0.1; // Mueve un 10% de la altura de la raqueta
+    }
+    if (teclaAbajoPresionada) {
+        jugadorY += altoRaqueta * 0.1; // Mueve un 10% de la altura de la raqueta
+    }
+    
+    // Constrain la posición de la raqueta del jugador
+    jugadorY = constrain(jugadorY, grosorMarco, height - grosorMarco - altoRaqueta);
 }
 
 function dibujarMarcos() {
@@ -166,11 +183,18 @@ function resetPelota() {
 // Manejar el movimiento de la raqueta del jugador con el teclado
 function keyPressed() {
     if (keyCode === UP_ARROW) {
-        jugadorY -= altoRaqueta * 0.1; // Mueve un 10% de la altura de la raqueta
+        teclaArribaPresionada = true;
     } else if (keyCode === DOWN_ARROW) {
-        jugadorY += altoRaqueta * 0.1; // Mueve un 10% de la altura de la raqueta
+        teclaAbajoPresionada = true;
     }
-    jugadorY = constrain(jugadorY, grosorMarco, height - grosorMarco - altoRaqueta);
+}
+
+function keyReleased() {
+    if (keyCode === UP_ARROW) {
+        teclaArribaPresionada = false;
+    } else if (keyCode === DOWN_ARROW) {
+        teclaAbajoPresionada = false;
+    }
 }
 
 // Manejar el movimiento táctil para la raqueta del jugador
@@ -181,7 +205,15 @@ function touchMoved() {
     return false; // Evita el comportamiento predeterminado
 }
 
+// Verificar si el dispositivo está en orientación vertical
+function verificarOrientacion() {
+    if (windowWidth < windowHeight) {
+        alert("Por favor, coloca tu celular en posición horizontal para una mejor experiencia de juego.");
+    }
+}
+
 // Manejar el redimensionamiento de la ventana
 function windowResized() {
     setup(); // Llama a setup para reajustar las dimensiones
+    verificarOrientacion(); // Verifica la orientación al redimensionar
 }
